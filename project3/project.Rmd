@@ -4,7 +4,7 @@ Inspired by https://youtu.be/zXt56MB-3vc (Great background music)<br>
 Dataset Details: This tidy data set contains 1,599 red wines with 11 variables on the chemical properties of the wine. At least 3 wine experts rated the quality of each wine, providing a rating between 0 (very bad) and 10 (very excellent). See more information on the data set in this <a href="wineQualityInfo.txt" target="_blank">file</a>. In this analysis we will be exploring which of the chemical properties influence the quality of red wines
 ========================================================
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
+```{r echo=FALSE, message=FALSE, warning=FALSE, message=FALSE, warning=FALSE, packages}
 # Load all of the packages that you end up using
 # in your analysis in this code chunk.
 
@@ -15,14 +15,16 @@ Dataset Details: This tidy data set contains 1,599 red wines with 11 variables o
 library(ggplot2)
 ```
 
-```{r echo=FALSE, Load_the_Data}
+```{r echo=FALSE, message=FALSE, warning=FALSE, Load_the_Data}
 # Load the Data
-#list.files() 
+getwd()
+setwd('~/GitHub/Nano3/project3/')
+list.files() 
 wineqr <- read.csv('wineQualityReds.csv')
 ```
 
 # Univariate Plots Section
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots}
 names(wineqr)
 str(wineqr)
 head(wineqr)
@@ -30,40 +32,40 @@ summary(wineqr)
 ```
 These first couple lines of code allow us to explore the dataset. Shows X is the unique identifier in this dataset and we see the MAX is 1599 which is the count of rows.The median quality is at a 6 while the MIN and MAX are 3 and 8 respectively, but we'll get into more details on that in just a bit...
 
-```{r echo=FALSE, Univariate_Plots2}
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots2}
 ggplot(aes(x = quality), data = wineqr) + geom_histogram(color = "red", 
     binwidth = .25)+scale_x_continuous(breaks = 2:8) +
 ggtitle("Count of Quality Scores Binwidth .25")
 ```
 
 We observe the judges mostly gave out 5 and 6 quality scores.
-```{r echo=FALSE, Univariate_Plots3}
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots3}
 ggplot(aes(x = residual.sugar), data = wineqr) + geom_histogram(color = "pink")+scale_x_continuous(breaks = 0:16) 
 ```
 
 Majority of red wines are not sweet. I'm curious what the scores were of really sweet ones...
-```{r echo=FALSE, Univariate_Plots4}
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots4}
 ggplot(aes(x=quality,y=residual.sugar), data = wineqr) + geom_point(color = "green")
 ```
 
 Suprisingly, the outliers with high sugar recieved average 5 and 6 rating just like the rest of them.
-```{r echo=FALSE, Univariate_Plots5}
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots5}
 ggplot(aes(quality,alcohol),data=wineqr)+geom_point()+ stat_smooth(method = "loess", formula = y ~ x, size = 1)
 ```
 
 Now we take a look at quality and alcohol, we can see there is linear growth.The dip on 5 is due to the amount of 5 quality rating given out. The numbers for quality =4,5,6 are shown below.
-```{r echo=FALSE, Univariate_Plots6}
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots6}
 summary(wineqr$quality==4)
 summary(wineqr$quality==5)
 summary(wineqr$quality==6)
 ```
-```{r echo=FALSE, Univariate_Plots7}
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots7}
 ggplot(aes(quality, volatile.acidity),data=wineqr)+geom_point()+ stat_smooth(method = "loess", formula = y ~ x, size = 1)
 ```
 
 Another feature that will help support investigation is volatile acidity, from the dataset description the amount of acetic acid in wine, which at too high of levels can lead to an unpleasant, vinegar taste. Which I would think would lead to lower quality scores.
 
-```{r echo=FALSE, Univariate_Plots8}
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots8}
 ggplot(aes(quality, citric.acid),data=wineqr)+geom_point()+ stat_smooth(method = "loess", formula = y ~ x, size = 1)
 ggplot(aes(quality, total.sulfur.dioxide),data=wineqr)+geom_point()+ stat_smooth(method = "loess", formula = y ~ x, size = 1)
 
@@ -110,8 +112,8 @@ Yes I converted free.sulfur.dioxide and total.sulfur.dioxide to grams as the dat
 ### Of the features you investigated, were there any unusual distributions? Did you perform any operations on the data to tidy, adjust, or change the form of the data? If so, why did you do this?
 Density and pH seemed to have the opposite distributions with the majority of the acid features. I always thought higher pH made water more, but I guess I was wrong. No changes were made to the data besides the two variables mentioned above.
 
-# Bivariate Plots Section
-```{r echo=FALSE, Bivariate_Plots}
+# Analysis of Quality - Bivariate Plots Section
+```{r echo=FALSE, message=FALSE, warning=FALSE, message=FALSE, warning=FALSE, Bivariate_Plots}
 #Had to comment out because took too much time to plot
 #library(GGally)
 #theme_set(theme_minimal(10))
@@ -139,7 +141,7 @@ Technically the strongest relationship was free.sulfur.dioxide and total.sulfur.
 
 # Multivariate Plots Section
 
-```{r echo=FALSE, Multivariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots}
 
 ```
 
@@ -156,7 +158,7 @@ From the description of the variables we can get a hint into some clear relation
 # Final Plots and Summary
 
 ### Plot One
-```{r echo=FALSE, Plot_One}
+```{r echo=FALSE, message=FALSE, warning=FALSE, message=FALSE, warning=FALSE, Plot_One}
 #install.packages("ggthemes")
 #library(ggthemes)
 ggplot(aes(x = alcohol), data = wineqr) + geom_histogram(color = "red")+scale_x_continuous(breaks = 7:16) + 
@@ -167,7 +169,7 @@ ggplot(aes(x = alcohol), data = wineqr) + geom_histogram(color = "red")+scale_x_
 Here we can see the distribution of Alcohol content to Quality Scores. we can see the scales slides to the right as the quality score increases.
 
 ### Plot Two
-```{r echo=FALSE, Plot_Two}
+```{r echo=FALSE, message=FALSE, warning=FALSE, message=FALSE, warning=FALSE, Plot_Two}
 ggplot(wineqr, aes(quality, alcohol, colour = sulphates))+
   geom_point(alpha=1/2)+ggtitle("Quality to Alchol Relationship with Sulphates")
 ```
@@ -176,7 +178,7 @@ ggplot(wineqr, aes(quality, alcohol, colour = sulphates))+
 The scatterplot matrix revealed a positive correlation with sulphates so here we is how it is related to alcohol and quality. Sulphates is a wine additive which can contribute to sulfur dioxide gas (S02) levels, wich acts as an antimicrobial and antioxidant. 
 
 ### Plot Three
-```{r echo=FALSE, Plot_Three}
+```{r echo=FALSE, message=FALSE, warning=FALSE, message=FALSE, warning=FALSE, Plot_Three}
 ggplot(aes(x = citric.acid), data = wineqr) + geom_histogram(color = "orange")+scale_x_continuous(breaks = 7:16) + 
   facet_wrap(~quality)+ggtitle("Citric Acid with Facet on Quality Score")
 ```
